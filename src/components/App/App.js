@@ -1,29 +1,16 @@
-import React from "react";
-import TaskList from "../TaskList";
-import Footer from "../Footer";
-import NewTaskForm from "../NewTaskForm";
-import "./App.css";
+import React from 'react'
+
+import TaskList from '../TaskList'
+import Footer from '../Footer'
+import NewTaskForm from '../NewTaskForm'
+import './App.css'
 
 class App extends React.Component {
-  maxId = 0;
+  maxId = 0
 
   state = {
-    todoData: [
-      this.createTask("Learn Web Core"),
-      this.createTask("Learn JavaScript"),
-      this.createTask("Learn React"),
-    ],
-    parameterTask: "All",
-  };
-
-  createTask(textTask) {
-    return {
-      textTask,
-      id: this.maxId++,
-      completed: false,
-      timeCreated: new Date(),
-      edit: false,
-    };
+    todoData: [this.createTask('Learn Web Core'), this.createTask('Learn JavaScript'), this.createTask('Learn React')],
+    parameterTask: 'All',
   }
 
   searchTask = (id) => {
@@ -37,124 +24,126 @@ class App extends React.Component {
     after - array of tasks after this task 
     */
 
-    const desiredTaskIndex = this.state.todoData.findIndex(
-      (item) => item.id === id
-    );
-    const desiredTask = Object.assign(
-      {},
-      this.state.todoData[desiredTaskIndex]
-    );
-    const before = this.state.todoData.slice(0, desiredTaskIndex);
-    const after = this.state.todoData.slice(desiredTaskIndex + 1);
+    const desiredTaskIndex = this.state.todoData.findIndex((item) => item.id === id)
+    const desiredTask = {
+      ...this.state.todoData[desiredTaskIndex],
+    }
+    const before = this.state.todoData.slice(0, desiredTaskIndex)
+    const after = this.state.todoData.slice(desiredTaskIndex + 1)
 
-    return [desiredTask, desiredTaskIndex, before, after];
-  };
+    return [desiredTask, desiredTaskIndex, before, after]
+  }
 
   editTask = (id) => {
     this.setState(({ todoData }) => {
-      const [, editTaskIndex, before, after] = this.searchTask(id);
+      const [, editTaskIndex, before, after] = this.searchTask(id)
 
       if (todoData[editTaskIndex].completed) {
-        return;
+        return false
       }
 
-      const editTask = Object.assign({}, todoData[editTaskIndex]);
-      editTask.edit = !editTask.edit;
+      const editTask = { ...todoData[editTaskIndex] }
+      editTask.edit = !editTask.edit
 
-      const newTodoData = [...before, editTask, ...after];
+      const newTodoData = [...before, editTask, ...after]
 
       return {
         todoData: newTodoData,
-      };
-    });
-  };
+      }
+    })
+  }
 
   changeTextTask = (id, textTask) => {
     this.setState(() => {
-      const [changeTextTask, , before, after] = this.searchTask(id);
+      const [changeTextTask, , before, after] = this.searchTask(id)
 
-      changeTextTask.textTask = textTask;
+      changeTextTask.textTask = textTask
 
-      const newTodoData = [...before, changeTextTask, ...after];
+      const newTodoData = [...before, changeTextTask, ...after]
 
       return {
         todoData: newTodoData,
-      };
-    });
-  };
+      }
+    })
+  }
 
   completedTask = (id) => {
     this.setState(() => {
-      const [completedTask, , before, after] = this.searchTask(id);
+      const [completedTask, , before, after] = this.searchTask(id)
 
-      completedTask.completed = !completedTask.completed;
+      completedTask.completed = !completedTask.completed
 
-      const newTodoData = [...before, completedTask, ...after];
+      const newTodoData = [...before, completedTask, ...after]
 
       return {
         todoData: newTodoData,
-      };
-    });
-  };
+      }
+    })
+  }
 
   deleteTask = (id) => {
     this.setState(() => {
-      const [, , before, after] = this.searchTask(id);
-      const newTodoData = [...before, ...after];
+      const [, , before, after] = this.searchTask(id)
+      const newTodoData = [...before, ...after]
 
       return {
         todoData: newTodoData,
-      };
-    });
-  };
+      }
+    })
+  }
 
   addTask = (textTask) => {
     const defaultProps = {
-      textTask: "New task (add text)",
-    };
-
-    const newTask = this.createTask(
-      textTask ? textTask : defaultProps.textTask
-    );
+      textTask: 'New task (add text)',
+    }
+    const newTask = this.createTask(textTask || defaultProps.textTask)
     this.setState(({ todoData }) => {
-      const newTodoData = [...todoData, newTask];
+      const newTodoData = [...todoData, newTask]
 
       return {
         todoData: newTodoData,
-      };
-    });
-  };
+      }
+    })
+  }
 
   changeTaskList = (parameterTask) => {
     this.setState({
-      parameterTask: parameterTask,
-    });
-  };
+      parameterTask,
+    })
+  }
 
   deleteCompleted = () => {
     this.setState(({ todoData }) => {
-      const noCompletedTasks = todoData.filter((item) => !item.completed);
+      const noCompletedTasks = todoData.filter((item) => !item.completed)
 
       return {
         todoData: noCompletedTasks,
-      };
-    });
-  };
+      }
+    })
+  }
+
+  createTask(textTask) {
+    return {
+      textTask,
+      id: this.maxId++,
+      completed: false,
+      timeCreated: new Date(),
+      edit: false,
+    }
+  }
 
   render() {
-    const { todoData, parameterTask } = this.state;
+    const { todoData, parameterTask } = this.state
 
-    let sendTodoData;
-    if (parameterTask === "Active") {
-      sendTodoData = todoData.filter((item) => !item.completed);
-    } else if (parameterTask === "Completed") {
-      sendTodoData = todoData.filter((item) => item.completed);
+    let sendTodoData
+    if (parameterTask === 'Active') {
+      sendTodoData = todoData.filter((item) => !item.completed)
+    } else if (parameterTask === 'Completed') {
+      sendTodoData = todoData.filter((item) => item.completed)
     } else {
-      sendTodoData = todoData;
+      sendTodoData = todoData
     }
-    const countNoCompletedTasks = todoData.filter(
-      (item) => !item.completed
-    ).length;
+    const countNoCompletedTasks = todoData.filter((item) => !item.completed).length
 
     return (
       <div>
@@ -166,8 +155,8 @@ class App extends React.Component {
           onCompleteTask={(id) => this.completedTask(id)}
           addTask={(textTask) => this.addTask(textTask)}
           changeTextTask={(id, textTask) => {
-            this.changeTextTask(id, textTask);
-            this.editTask(id);
+            this.changeTextTask(id, textTask)
+            this.editTask(id)
           }}
         />
         <Footer
@@ -177,8 +166,8 @@ class App extends React.Component {
           countNoCompletedTasks={countNoCompletedTasks}
         />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
