@@ -6,12 +6,12 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "date-fns": "^2.29.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "date-fns": "^2.29.3"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,7 +20,8 @@
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.js",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix --color"
+    "lint:fix": "eslint ./src --fix --color",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^8.39.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
@@ -49,6 +51,14 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.1",
     "prettier": "^2.8.8"
+  },
+  "lint-staged": {
+    "*.(js|jsx)": [
+      "npm run lint:fix",
+      "npm run format"
+    ]
   }
 }
