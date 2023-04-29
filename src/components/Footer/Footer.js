@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import TaskFilter from '../TaskFilter'
+import { TaskFilter } from '../TaskFilter'
 import './Footer.css'
 
 class Footer extends React.PureComponent {
@@ -31,4 +31,4 @@ Footer.propTypes = {
   countNoCompletedTasks: PropTypes.number,
 }
 
-export default Footer
+export { Footer }

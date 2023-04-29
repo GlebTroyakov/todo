@@ -35,4 +35,4 @@ TaskFilter.propTypes = {
   parameterTask: PropTypes.string,
 }
 
-export default TaskFilter
+export { TaskFilter }

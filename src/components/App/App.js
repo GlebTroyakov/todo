@@ -1,8 +1,8 @@
 import React from 'react'
 
-import TaskList from '../TaskList'
-import Footer from '../Footer'
-import NewTaskForm from '../NewTaskForm'
+import { TaskList } from '../TaskList'
+import { Footer } from '../Footer'
+import { NewTaskForm } from '../NewTaskForm'
 import './App.css'
 
 class App extends React.Component {
@@ -170,4 +170,4 @@ class App extends React.Component {
   }
 }
 
-export default App
+export { App }

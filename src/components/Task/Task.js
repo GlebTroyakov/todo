@@ -34,4 +34,4 @@ Task.propTypes = {
   completed: PropTypes.bool.isRequired,
 }
 
-export default Task
+export { Task }

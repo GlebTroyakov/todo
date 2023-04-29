@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Task from '../Task'
+import { Task } from '../Task'
 
 import './TaskList.css'
 
@@ -119,4 +119,4 @@ TaskList.propTypes = {
   onCompleteTask: PropTypes.func.isRequired,
 }
 
-export default TaskList
+export { TaskList }

@@ -53,4 +53,4 @@ NewTaskForm.propTypes = {
   addTask: PropTypes.func.isRequired,
 }
 
-export default NewTaskForm
+export { NewTaskForm }
