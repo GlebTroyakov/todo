@@ -1,4 +1,5 @@
 import React from 'react'
+import { nanoid } from 'nanoid'
 
 import { TaskList } from '../TaskList'
 import { Footer } from '../Footer'
@@ -6,8 +7,6 @@ import { NewTaskForm } from '../NewTaskForm'
 import './App.css'
 
 class App extends React.Component {
-  maxId = 0
-
   state = {
     todoData: [this.createTask('Learn Web Core'), this.createTask('Learn JavaScript'), this.createTask('Learn React')],
     parameterTask: 'All',
@@ -125,7 +124,7 @@ class App extends React.Component {
   createTask(textTask) {
     return {
       textTask,
-      id: this.maxId++,
+      id: nanoid(),
       completed: false,
       timeCreated: new Date(),
       edit: false,
