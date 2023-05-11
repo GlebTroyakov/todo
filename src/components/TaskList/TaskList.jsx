@@ -60,7 +60,7 @@ class TaskList extends React.Component {
   }
 
   render() {
-    const { todos, onDeleted, onChange, onCompleteTask } = this.props
+    const { todos, onDeleted, onChange, onCompleteTask, onChangeStartTimer } = this.props
     const items = todos.map((item) => {
       const { id, textTask, completed, timeCreated, edit, timeSeconds, startTimer } = item
       let liClassNames = ''
@@ -86,6 +86,7 @@ class TaskList extends React.Component {
               this.addTask(id, item.textTask)
             }}
             onCompleteTask={() => onCompleteTask(id)}
+            onChangeStartTimer={() => onChangeStartTimer(id)}
           />
           {liClassNames === 'editing' && (
             <input

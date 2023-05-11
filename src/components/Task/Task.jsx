@@ -7,8 +7,18 @@ import { Timer } from '../Timer'
 
 class Task extends React.PureComponent {
   render() {
-    const { textTask, onDeleted, onChange, onCompleteTask, completed, timeCreated, id, timeSeconds, startTimer } =
-      this.props
+    const {
+      textTask,
+      onDeleted,
+      onChange,
+      onCompleteTask,
+      completed,
+      timeCreated,
+      id,
+      timeSeconds,
+      startTimer,
+      onChangeStartTimer,
+    } = this.props
 
     return (
       <div className="view">
@@ -17,7 +27,7 @@ class Task extends React.PureComponent {
           <span className="description" onClick={onCompleteTask} aria-hidden="true">
             {textTask}
           </span>
-          <Timer timeSeconds={timeSeconds} startTimer={startTimer} />
+          <Timer timeSeconds={timeSeconds} startTimer={startTimer} onChangeStartTimer={() => onChangeStartTimer(id)} />
           <span className="created">
             {`created ${formatDistanceToNow(timeCreated, {
               includeSeconds: true,

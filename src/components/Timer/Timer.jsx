@@ -6,21 +6,17 @@ import start from '../../image/start.png'
 import pause from '../../image/pause.png'
 
 class Timer extends React.PureComponent {
-  testTimer = () => {
-    alert('test Timer')
-  }
-
   render() {
-    const { timeSeconds, startTimer } = this.props
+    const { timeSeconds, startTimer, onChangeStartTimer, id } = this.props
 
     const buttonStart = (
-      <button className="timer-button" type="button" aria-label="start timer" onClick={this.testTimer}>
+      <button className="timer-button" type="button" aria-label="start timer" onClick={() => onChangeStartTimer(id)}>
         <img className="timer-button__icon" alt="start timer" src={start} />
       </button>
     )
 
     const buttonPause = (
-      <button className="timer-button" type="button" aria-label="pause timer" onClick={this.testTimer}>
+      <button className="timer-button" type="button" aria-label="pause timer" onClick={() => onChangeStartTimer(id)}>
         <img className="timer-button__icon" alt="pause timer" src={pause} />
       </button>
     )

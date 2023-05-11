@@ -118,6 +118,20 @@ class App extends React.Component {
     })
   }
 
+  changeStartTimer = (id) => {
+    this.setState(() => {
+      const [changeStartTimerTask, , before, after] = this.searchTask(id)
+
+      changeStartTimerTask.startTimer = !changeStartTimerTask.startTimer
+
+      const newTodoData = [...before, changeStartTimerTask, ...after]
+
+      return {
+        todoData: newTodoData,
+      }
+    })
+  }
+
   createTask(textTask, timeSeconds = 0) {
     return {
       textTask,
@@ -151,6 +165,7 @@ class App extends React.Component {
           onDeleted={(id) => this.deleteTask(id)}
           onChange={(id) => this.editTask(id)}
           onCompleteTask={(id) => this.completedTask(id)}
+          onChangeStartTimer={(id) => this.changeStartTimer(id)}
           addTask={(textTask) => this.addTask(textTask)}
           changeTextTask={(id, textTask) => {
             this.changeTextTask(id, textTask)
