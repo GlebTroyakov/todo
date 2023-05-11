@@ -62,7 +62,7 @@ class TaskList extends React.Component {
   render() {
     const { todos, onDeleted, onChange, onCompleteTask } = this.props
     const items = todos.map((item) => {
-      const { id, textTask, completed, timeCreated, edit } = item
+      const { id, textTask, completed, timeCreated, edit, timeSeconds, startTimer } = item
       let liClassNames = ''
       if (completed) {
         liClassNames = 'completed'
@@ -78,6 +78,8 @@ class TaskList extends React.Component {
             completed={completed}
             timeCreated={timeCreated}
             edit={edit}
+            timeSeconds={timeSeconds}
+            startTimer={startTimer}
             onDeleted={() => onDeleted(id)}
             onChange={() => {
               onChange(id)
@@ -109,10 +111,13 @@ class TaskList extends React.Component {
 TaskList.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
       textTask: PropTypes.string,
+      id: PropTypes.string,
       completed: PropTypes.bool,
       edit: PropTypes.bool,
+      timeCreated: PropTypes.instanceOf(Date),
+      timeSeconds: PropTypes.number,
+      startTimer: PropTypes.bool,
     })
   ).isRequired,
   onDeleted: PropTypes.func.isRequired,

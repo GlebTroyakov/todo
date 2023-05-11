@@ -3,9 +3,12 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import './Task.css'
 import PropTypes from 'prop-types'
 
+import { Timer } from '../Timer'
+
 class Task extends React.PureComponent {
   render() {
-    const { textTask, onDeleted, onChange, onCompleteTask, completed, timeCreated, id } = this.props
+    const { textTask, onDeleted, onChange, onCompleteTask, completed, timeCreated, id, timeSeconds, startTimer } =
+      this.props
 
     return (
       <div className="view">
@@ -14,6 +17,7 @@ class Task extends React.PureComponent {
           <span className="description" onClick={onCompleteTask} aria-hidden="true">
             {textTask}
           </span>
+          <Timer timeSeconds={timeSeconds} startTimer={startTimer} />
           <span className="created">
             {`created ${formatDistanceToNow(timeCreated, {
               includeSeconds: true,
@@ -32,6 +36,7 @@ Task.propTypes = {
   onDeleted: PropTypes.func.isRequired,
   onCompleteTask: PropTypes.func.isRequired,
   completed: PropTypes.bool.isRequired,
+  timeSeconds: PropTypes.number.isRequired,
 }
 
 export { Task }

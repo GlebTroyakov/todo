@@ -8,7 +8,7 @@ import './App.css'
 
 class App extends React.Component {
   state = {
-    todoData: [this.createTask('Learn Web Core'), this.createTask('Learn JavaScript'), this.createTask('Learn React')],
+    todoData: [this.createTask('First', 300), this.createTask('Second', 50), this.createTask('Third')],
     parameterTask: 'All',
   }
 
@@ -91,11 +91,8 @@ class App extends React.Component {
     })
   }
 
-  addTask = (textTask) => {
-    const defaultProps = {
-      textTask: 'New task (add text)',
-    }
-    const newTask = this.createTask(textTask || defaultProps.textTask)
+  addTask = (textTask, timeSeconds = 0) => {
+    const newTask = this.createTask(textTask, timeSeconds)
     this.setState(({ todoData }) => {
       const newTodoData = [...todoData, newTask]
 
@@ -121,13 +118,15 @@ class App extends React.Component {
     })
   }
 
-  createTask(textTask) {
+  createTask(textTask, timeSeconds = 0) {
     return {
       textTask,
       id: nanoid(),
       completed: false,
-      timeCreated: new Date(),
       edit: false,
+      timeCreated: new Date(),
+      timeSeconds,
+      startTimer: false,
     }
   }
 

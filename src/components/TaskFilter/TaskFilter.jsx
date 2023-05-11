@@ -31,7 +31,7 @@ TaskFilter.defaultProps = {
 }
 
 TaskFilter.propTypes = {
-  changeTaskList: PropTypes.arrayOf(PropTypes.func).isRequired,
+  changeTaskList: PropTypes.func.isRequired,
   parameterTask: PropTypes.string,
 }
 
