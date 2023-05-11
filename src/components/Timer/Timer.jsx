@@ -8,6 +8,16 @@ import pause from '../../image/pause.png'
 class Timer extends React.PureComponent {
   render() {
     const { timeSeconds, startTimer, onChangeStartTimer, id } = this.props
+    function renderer(seconds) {
+      const min = Math.floor(seconds / 60)
+      const sec = seconds % 60
+
+      return (
+        <span>
+          {zeroPad(min)}:{zeroPad(sec)}
+        </span>
+      )
+    }
 
     const buttonStart = (
       <button className="timer-button" type="button" aria-label="start timer" onClick={() => onChangeStartTimer(id)}>
@@ -25,7 +35,11 @@ class Timer extends React.PureComponent {
       <div className="timer">
         {startTimer ? buttonPause : buttonStart}
         <span className="timer-time">
-          <Countdown date={Date.now() + timeSeconds * 1000} autoStart={startTimer} />
+          <Countdown
+            date={Date.now() + timeSeconds * 1000}
+            autoStart={startTimer}
+            renderer={() => renderer(timeSeconds)}
+          />
         </span>
       </div>
     )
