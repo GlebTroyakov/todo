@@ -27,7 +27,12 @@ class Task extends React.PureComponent {
           <span className="description" onClick={onCompleteTask} aria-hidden="true">
             {textTask}
           </span>
-          <Timer timeSeconds={timeSeconds} startTimer={startTimer} onChangeStartTimer={() => onChangeStartTimer(id)} />
+          <Timer
+            timeSeconds={timeSeconds}
+            startTimer={startTimer}
+            id={id}
+            onChangeStartTimer={() => onChangeStartTimer(id)}
+          />
           <span className="created">
             {`created ${formatDistanceToNow(timeCreated, {
               includeSeconds: true,

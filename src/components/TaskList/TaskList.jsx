@@ -87,6 +87,7 @@ class TaskList extends React.Component {
             }}
             onCompleteTask={() => onCompleteTask(id)}
             onChangeStartTimer={() => onChangeStartTimer(id)}
+            id={id}
           />
           {liClassNames === 'editing' && (
             <input
