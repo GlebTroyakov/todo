@@ -12,6 +12,16 @@ class NewTaskForm extends React.Component {
     }
   }
 
+  validateTimeValue = (time) => {
+    let result = true
+    time.split('').forEach((el) => {
+      if (Number.isNaN(+el)) {
+        result = false
+      }
+    })
+    return result
+  }
+
   textTaskChange = (event) => {
     this.setState({
       textTask: event.target.value,
@@ -19,15 +29,19 @@ class NewTaskForm extends React.Component {
   }
 
   onChangeMinutes = (event) => {
-    this.setState({
-      min: event.target.value,
-    })
+    if (this.validateTimeValue(event.target.value) && event.target.value < 60) {
+      this.setState({
+        min: event.target.value,
+      })
+    }
   }
 
   onChangeSeconds = (event) => {
-    this.setState({
-      sec: event.target.value,
-    })
+    if (this.validateTimeValue(event.target.value) && event.target.value < 60) {
+      this.setState({
+        sec: event.target.value,
+      })
+    }
   }
 
   onClickEnter = (event) => {
@@ -85,8 +99,8 @@ class NewTaskForm extends React.Component {
             value={min}
             onChange={this.onChangeMinutes}
             style={{ width: '15%', padding: '0' }}
-            maxLength={2}
             onKeyDown={this.onClickEnter}
+            maxLength={2}
           />
           <input
             className="new-todo new-todo-form__timer"
@@ -94,22 +108,11 @@ class NewTaskForm extends React.Component {
             value={sec}
             onChange={this.onChangeSeconds}
             style={{ width: '15%', padding: '0' }}
-            maxLength={2}
             onKeyDown={this.onClickEnter}
+            maxLength={2}
           />
           <input type="submit" hidden />
         </form>
-        {/* <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          onChange={this.textTaskChange}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              this.onClickEnter()
-            }
-          }}
-          value={textTask}
-        /> */}
       </header>
     )
   }
