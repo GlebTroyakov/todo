@@ -1,3 +1,3 @@
-# Todo React App
+# Todo Timer React App
 
-Check my app in [Vercel](https://todo-weld-two.vercel.app).
+Check my app in [Vercel](https://todo-timer-3vcbiw7rz-glebtroyakov.vercel.app).
