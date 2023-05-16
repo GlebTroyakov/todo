@@ -55,7 +55,7 @@ class Timer extends React.PureComponent {
 
     return (
       <div className="timer">
-        {runTimer ? buttonPause : buttonStart}
+        {runTimer && timeSeconds > 0 ? buttonPause : buttonStart}
         <span className="timer-time">
           <Countdown date={Date.now() + timeSeconds * 1000} autoStart={runTimer} renderer={renderer} ref={setRef} />
         </span>
