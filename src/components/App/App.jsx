@@ -118,19 +118,73 @@ class App extends React.Component {
     })
   }
 
-  changeStartTimer = (id) => {
+  updateTimer = (id) => {
     this.setState(() => {
-      const [changeStartTimerTask, , before, after] = this.searchTask(id)
+      const [updateTimerTask, , before, after] = this.searchTask(id)
+      const { timeSeconds, timerId } = updateTimerTask
 
-      changeStartTimerTask.startTimer = !changeStartTimerTask.startTimer
+      let newTask
 
-      const newTodoData = [...before, changeStartTimerTask, ...after]
+      if (timeSeconds > 0) {
+        newTask = { ...updateTimerTask, timeSeconds: timeSeconds - 1 }
+      } else {
+        clearInterval(timerId)
+        newTask = { ...updateTimerTask, timeSeconds: 0, runTimer: false }
+      }
+
+      const newTodoData = [...before, newTask, ...after]
+      return {
+        todoData: newTodoData,
+      }
+    })
+  }
+
+  startTimer = (id) => {
+    this.setState(() => {
+      const [runTimerTask, , before, after] = this.searchTask(id)
+
+      const timerId = setInterval(() => {
+        this.updateTimer(id)
+      }, 1000)
+
+      const newTask = { ...runTimerTask, runTimer: true, timerId }
+      const newTodoData = [...before, newTask, ...after]
+      // console.log('start', id, runTimerTask.timeSeconds)
+      return {
+        todoData: newTodoData,
+      }
+    })
+  }
+
+  pauseTimer = (id) => {
+    // console.log('pause', id)
+    this.setState(() => {
+      const [pauseTimerTask, , before, after] = this.searchTask(id)
+
+      const newTask = { ...pauseTimerTask, runTimer: false }
+
+      clearInterval(pauseTimerTask.timerId) // ? del timer id
+      const newTodoData = [...before, newTask, ...after]
 
       return {
         todoData: newTodoData,
       }
     })
   }
+
+  // changerunTimer = (id) => {
+  //   this.setState(() => {
+  //     const [changerunTimerTask, , before, after] = this.searchTask(id)
+
+  //     changerunTimerTask.runTimer = !changerunTimerTask.runTimer
+
+  //     const newTodoData = [...before, changerunTimerTask, ...after]
+
+  //     return {
+  //       todoData: newTodoData,
+  //     }
+  //   })
+  // }
 
   createTask(textTask, timeSeconds = 0) {
     return {
@@ -140,7 +194,8 @@ class App extends React.Component {
       edit: false,
       timeCreated: new Date(),
       timeSeconds,
-      startTimer: false,
+      runTimer: false,
+      timerId: null,
     }
   }
 
@@ -165,7 +220,8 @@ class App extends React.Component {
           onDeleted={(id) => this.deleteTask(id)}
           onChange={(id) => this.editTask(id)}
           onCompleteTask={(id) => this.completedTask(id)}
-          onChangeStartTimer={(id) => this.changeStartTimer(id)}
+          onStartTimer={(id) => this.startTimer(id)}
+          onPauseTimer={(id) => this.pauseTimer(id)}
           addTask={(textTask) => this.addTask(textTask)}
           changeTextTask={(id, textTask) => {
             this.changeTextTask(id, textTask)

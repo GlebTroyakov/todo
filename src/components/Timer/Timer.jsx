@@ -7,7 +7,7 @@ import pause from '../../image/pause.png'
 
 class Timer extends React.PureComponent {
   render() {
-    const { timeSeconds, startTimer, onChangeStartTimer, id } = this.props
+    const { timeSeconds, runTimer, onStartTimer, onPauseTimer, id } = this.props
 
     const renderer = ({ minutes, seconds, completed }) => {
       if (completed) {
@@ -30,16 +30,15 @@ class Timer extends React.PureComponent {
     }
 
     const onClickStart = (idTask) => {
-      if (startTimer) return
-      // alert(idTask)
+      if (runTimer) return
       countdownApi.start()
-      onChangeStartTimer(idTask)
+      onStartTimer(idTask)
     }
 
     const onClickPause = (idTask) => {
-      if (!startTimer) return
+      if (!runTimer) return
       countdownApi.pause()
-      onChangeStartTimer(idTask)
+      onPauseTimer(idTask)
     }
 
     const buttonStart = (
@@ -56,9 +55,9 @@ class Timer extends React.PureComponent {
 
     return (
       <div className="timer">
-        {startTimer ? buttonPause : buttonStart}
+        {runTimer ? buttonPause : buttonStart}
         <span className="timer-time">
-          <Countdown date={Date.now() + timeSeconds * 1000} autoStart={startTimer} renderer={renderer} ref={setRef} />
+          <Countdown date={Date.now() + timeSeconds * 1000} autoStart={runTimer} renderer={renderer} ref={setRef} />
         </span>
       </div>
     )

@@ -60,9 +60,9 @@ class TaskList extends React.Component {
   }
 
   render() {
-    const { todos, onDeleted, onChange, onCompleteTask, onChangeStartTimer } = this.props
+    const { todos, onDeleted, onChange, onCompleteTask, onStartTimer, onPauseTimer } = this.props
     const items = todos.map((item) => {
-      const { id, textTask, completed, timeCreated, edit, timeSeconds, startTimer } = item
+      const { id, textTask, completed, timeCreated, edit, timeSeconds, runTimer } = item
       let liClassNames = ''
       if (completed) {
         liClassNames = 'completed'
@@ -79,14 +79,15 @@ class TaskList extends React.Component {
             timeCreated={timeCreated}
             edit={edit}
             timeSeconds={timeSeconds}
-            startTimer={startTimer}
+            runTimer={runTimer}
             onDeleted={() => onDeleted(id)}
             onChange={() => {
               onChange(id)
               this.addTask(id, item.textTask)
             }}
             onCompleteTask={() => onCompleteTask(id)}
-            onChangeStartTimer={() => onChangeStartTimer(id)}
+            onStartTimer={() => onStartTimer(id)}
+            onPauseTimer={() => onPauseTimer(id)}
             id={id}
           />
           {liClassNames === 'editing' && (

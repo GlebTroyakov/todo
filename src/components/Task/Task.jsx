@@ -16,8 +16,9 @@ class Task extends React.PureComponent {
       timeCreated,
       id,
       timeSeconds,
-      startTimer,
-      onChangeStartTimer,
+      runTimer,
+      onStartTimer,
+      onPauseTimer,
     } = this.props
 
     return (
@@ -29,9 +30,10 @@ class Task extends React.PureComponent {
           </span>
           <Timer
             timeSeconds={timeSeconds}
-            startTimer={startTimer}
+            runTimer={runTimer}
             id={id}
-            onChangeStartTimer={() => onChangeStartTimer(id)}
+            onStartTimer={() => onStartTimer(id)}
+            onPauseTimer={() => onPauseTimer(id)}
           />
           <span className="created">
             {`created ${formatDistanceToNow(timeCreated, {
