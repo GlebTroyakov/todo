@@ -161,7 +161,7 @@ class App extends React.Component {
 
       const newTask = { ...pauseTimerTask, runTimer: false }
 
-      clearInterval(pauseTimerTask.timerId) // ? del timer id
+      clearInterval(pauseTimerTask.timerId)
       const newTodoData = [...before, newTask, ...after]
 
       return {
