@@ -1,6 +1,7 @@
 import React from 'react'
 import './Timer.css'
 import Countdown, { zeroPad } from 'react-countdown'
+import PropTypes from 'prop-types'
 
 import start from '../../image/start.png'
 import pause from '../../image/pause.png'
@@ -62,6 +63,14 @@ class Timer extends React.PureComponent {
       </div>
     )
   }
+}
+
+Timer.propTypes = {
+  timeSeconds: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  runTimer: PropTypes.bool.isRequired,
+  onPauseTimer: PropTypes.func.isRequired,
+  onStartTimer: PropTypes.func.isRequired,
 }
 
 export { Timer }

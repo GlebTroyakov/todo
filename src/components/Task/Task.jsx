@@ -51,9 +51,14 @@ class Task extends React.PureComponent {
 Task.propTypes = {
   textTask: PropTypes.string.isRequired,
   onDeleted: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onCompleteTask: PropTypes.func.isRequired,
   completed: PropTypes.bool.isRequired,
   timeSeconds: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  runTimer: PropTypes.bool.isRequired,
+  onPauseTimer: PropTypes.func.isRequired,
+  onStartTimer: PropTypes.func.isRequired,
 }
 
 export { Task }

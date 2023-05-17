@@ -125,6 +125,9 @@ TaskList.propTypes = {
   ).isRequired,
   onDeleted: PropTypes.func.isRequired,
   onCompleteTask: PropTypes.func.isRequired,
+  onStartTimer: PropTypes.func.isRequired,
+  onPauseTimer: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export { TaskList }
