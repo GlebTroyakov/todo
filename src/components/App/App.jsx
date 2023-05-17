@@ -149,7 +149,6 @@ class App extends React.Component {
 
       const newTask = { ...runTimerTask, runTimer: true, timerId }
       const newTodoData = [...before, newTask, ...after]
-      // console.log('start', id, runTimerTask.timeSeconds)
       return {
         todoData: newTodoData,
       }
@@ -157,7 +156,6 @@ class App extends React.Component {
   }
 
   pauseTimer = (id) => {
-    // console.log('pause', id)
     this.setState(() => {
       const [pauseTimerTask, , before, after] = this.searchTask(id)
 
@@ -171,20 +169,6 @@ class App extends React.Component {
       }
     })
   }
-
-  // changerunTimer = (id) => {
-  //   this.setState(() => {
-  //     const [changerunTimerTask, , before, after] = this.searchTask(id)
-
-  //     changerunTimerTask.runTimer = !changerunTimerTask.runTimer
-
-  //     const newTodoData = [...before, changerunTimerTask, ...after]
-
-  //     return {
-  //       todoData: newTodoData,
-  //     }
-  //   })
-  // }
 
   createTask(textTask, timeSeconds = 0) {
     return {
