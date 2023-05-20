@@ -89,7 +89,7 @@ class NewTaskForm extends React.Component {
             value={textTask}
             onChange={this.textTaskChange}
             style={{ width: '70%' }}
-            maxLength={7}
+            maxLength={10}
             required
             onKeyDown={this.onClickEnter}
           />

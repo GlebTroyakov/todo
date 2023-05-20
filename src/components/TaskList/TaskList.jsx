@@ -101,6 +101,7 @@ class TaskList extends React.Component {
                 this.saveTask(event.key, id)
               }}
               value={this.returnTextTask(id)}
+              maxLength={10}
             />
           )}
         </li>
