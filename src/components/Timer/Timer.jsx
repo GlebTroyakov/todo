@@ -28,15 +28,17 @@ export function Timer({ timeSeconds, runTimer, onStartTimer, onPauseTimer, id })
   }
 
   const onClickStart = (idTask) => {
-    if (runTimer) return
-    countdownApi.start()
-    onStartTimer(idTask)
+    if (!runTimer) {
+      countdownApi.start()
+      onStartTimer(idTask)
+    }
   }
 
   const onClickPause = (idTask) => {
-    if (!runTimer) return
-    countdownApi.pause()
-    onPauseTimer(idTask)
+    if (runTimer) {
+      countdownApi.pause()
+      onPauseTimer(idTask)
+    }
   }
 
   const buttonStart = (
