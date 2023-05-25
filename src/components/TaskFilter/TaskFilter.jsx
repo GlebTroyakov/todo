@@ -2,12 +2,12 @@ import React from 'react'
 import './TaskFilter.css'
 import PropTypes from 'prop-types'
 
-class TaskFilter extends React.Component {
-  addButton = (textButton) => (
+export function TaskFilter({ changeTaskList, parameterTask }) {
+  const addButton = (textButton) => (
     <button
-      className={textButton === this.props.parameterTask ? 'selected' : ''}
+      className={textButton === parameterTask ? 'selected' : ''}
       onClick={(event) => {
-        this.props.changeTaskList(event.target.textContent)
+        changeTaskList(event.target.textContent)
       }}
       type="button"
     >
@@ -15,15 +15,13 @@ class TaskFilter extends React.Component {
     </button>
   )
 
-  render() {
-    return (
-      <ul className="filters">
-        <li>{this.addButton('All')}</li>
-        <li>{this.addButton('Active')}</li>
-        <li>{this.addButton('Completed')}</li>
-      </ul>
-    )
-  }
+  return (
+    <ul className="filters">
+      <li>{addButton('All')}</li>
+      <li>{addButton('Active')}</li>
+      <li>{addButton('Completed')}</li>
+    </ul>
+  )
 }
 
 TaskFilter.defaultProps = {
@@ -34,5 +32,3 @@ TaskFilter.propTypes = {
   changeTaskList: PropTypes.func.isRequired,
   parameterTask: PropTypes.string,
 }
-
-export { TaskFilter }

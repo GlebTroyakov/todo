@@ -1,115 +1,108 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { Task } from '../Task'
 
 import './TaskList.css'
 
-class TaskList extends React.Component {
-  state = {
-    tasks: [],
-  }
+export function TaskList({ todos, onDeleted, onChange, onCompleteTask, onStartTimer, onPauseTimer, changeTextTask }) {
+  const [tasks, setTasks] = useState([])
 
-  saveTask = (nameKey, id) => {
-    if (nameKey === 'Enter') {
-      const taskIndex = this.searchTaskIndex(id)
-      const task = this.state.tasks[taskIndex]
-      this.props.changeTextTask(task[0], task[1])
-      this.deleteTask(id)
-    }
-  }
+  const searchTaskIndex = (id) => tasks.findIndex((item) => item[0] === id)
 
-  addTask = (id, textTask) => {
-    const { tasks } = this.state
+  const deleteTask = (id) => {
+    const deleteTaskIndex = searchTaskIndex(id)
 
-    this.setState({
-      tasks: [...tasks, [id, textTask]],
-    })
-  }
+    const before = tasks.slice(0, deleteTaskIndex)
+    const after = tasks.slice(deleteTaskIndex + 1)
 
-  textTaskChange = (id, newTextTask) => {
-    const newTaskIndex = this.searchTaskIndex(id)
-    const newTask = this.state.tasks[newTaskIndex]
-    newTask[1] = newTextTask
-
-    const before = this.state.tasks.slice(0, newTaskIndex)
-    const after = this.state.tasks.slice(newTaskIndex + 1)
-
-    this.setState({
-      tasks: [...before, newTask, ...after],
-    })
-  }
-
-  searchTaskIndex = (id) => this.state.tasks.findIndex((item) => item[0] === id)
-
-  deleteTask = (id) => {
-    const deleteTaskIndex = this.searchTaskIndex(id)
-
-    const before = this.state.tasks.slice(0, deleteTaskIndex)
-    const after = this.state.tasks.slice(deleteTaskIndex + 1)
-
-    this.setState({
+    setTasks({
       tasks: [...before, ...after],
     })
   }
 
-  returnTextTask = (id) => {
-    const taskIndex = this.searchTaskIndex(id)
-    const task = this.state.tasks[taskIndex]
+  const saveTask = (nameKey, id) => {
+    if (nameKey === 'Enter') {
+      const taskIndex = searchTaskIndex(id)
+      const task = tasks[taskIndex]
+      changeTextTask(task[0], task[1])
+      deleteTask(id)
+    }
+  }
+
+  const addTask = (id, textTask) => {
+    setTasks({
+      tasks: [...tasks, [id, textTask]],
+    })
+  }
+
+  const textTaskChange = (id, newTextTask) => {
+    const newTaskIndex = searchTaskIndex(id)
+    const newTask = tasks[newTaskIndex]
+    newTask[1] = newTextTask
+
+    const before = tasks.slice(0, newTaskIndex)
+    const after = tasks.slice(newTaskIndex + 1)
+
+    setTasks({
+      tasks: [...before, newTask, ...after],
+    })
+  }
+
+  const returnTextTask = (id) => {
+    const taskIndex = searchTaskIndex(id)
+    const task = tasks[taskIndex]
     return task[1]
   }
 
-  render() {
-    const { todos, onDeleted, onChange, onCompleteTask, onStartTimer, onPauseTimer } = this.props
-    const items = todos.map((item) => {
-      const { id, textTask, completed, timeCreated, edit, timeSeconds, runTimer } = item
-      let liClassNames = ''
-      if (completed) {
-        liClassNames = 'completed'
-      }
-      if (edit) {
-        liClassNames = 'editing'
-      }
+  const items = todos.map((item) => {
+    const { id, textTask, completed, timeCreated, edit, timeSeconds, runTimer } = item
+    let liClassNames = ''
+    if (completed) {
+      liClassNames = 'completed'
+    }
+    if (edit) {
+      liClassNames = 'editing'
+    }
 
-      return (
-        <li className={liClassNames} key={id}>
-          <Task
-            textTask={textTask}
-            completed={completed}
-            timeCreated={timeCreated}
-            edit={edit}
-            timeSeconds={timeSeconds}
-            runTimer={runTimer}
-            onDeleted={() => onDeleted(id)}
-            onChange={() => {
-              onChange(id)
-              this.addTask(id, item.textTask)
+    return (
+      <li className={liClassNames} key={id}>
+        <Task
+          textTask={textTask}
+          completed={completed}
+          timeCreated={timeCreated}
+          edit={edit}
+          timeSeconds={timeSeconds}
+          runTimer={runTimer}
+          onDeleted={() => onDeleted(id)}
+          onChange={() => {
+            onChange(id)
+            addTask(id, item.textTask)
+          }}
+          onCompleteTask={() => onCompleteTask(id)}
+          onStartTimer={() => onStartTimer(id)}
+          onPauseTimer={() => onPauseTimer(id)}
+          id={id}
+        />
+        {liClassNames === 'editing' && (
+          <input
+            type="text"
+            className="edit"
+            onChange={(event) => {
+              textTaskChange(id, event.target.value)
             }}
-            onCompleteTask={() => onCompleteTask(id)}
-            onStartTimer={() => onStartTimer(id)}
-            onPauseTimer={() => onPauseTimer(id)}
-            id={id}
+            onKeyDown={(event) => {
+              saveTask(event.key, id)
+            }}
+            value={returnTextTask(id)}
+            maxLength={10}
           />
-          {liClassNames === 'editing' && (
-            <input
-              type="text"
-              className="edit"
-              onChange={(event) => {
-                this.textTaskChange(id, event.target.value)
-              }}
-              onKeyDown={(event) => {
-                this.saveTask(event.key, id)
-              }}
-              value={this.returnTextTask(id)}
-              maxLength={10}
-            />
-          )}
-        </li>
-      )
-    })
+        )}
+      </li>
+    )
+  })
 
-    return <ul className="todo-list">{items}</ul>
-  }
+  return <ul className="todo-list">{items}</ul>
 }
 
 TaskList.propTypes = {
@@ -130,5 +123,3 @@ TaskList.propTypes = {
   onPauseTimer: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
 }
-
-export { TaskList }

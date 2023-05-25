@@ -206,7 +206,6 @@ class App extends React.Component {
           onCompleteTask={(id) => this.completedTask(id)}
           onStartTimer={(id) => this.startTimer(id)}
           onPauseTimer={(id) => this.pauseTimer(id)}
-          addTask={(textTask) => this.addTask(textTask)}
           changeTextTask={(id, textTask) => {
             this.changeTextTask(id, textTask)
             this.editTask(id)
