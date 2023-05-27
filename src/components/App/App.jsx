@@ -24,11 +24,11 @@ export function App() {
   const [parameterTask, setParameterTask] = useState('All')
 
   const searchTask = (id, tasks) => {
+    const newTasks = [...tasks]
     const index = tasks.findIndex((item) => item.id === id)
     const task = {
-      ...todoData[index],
+      ...tasks[index],
     }
-    const newTasks = [...tasks]
 
     return [task, index, newTasks]
   }
@@ -109,17 +109,16 @@ export function App() {
 
   const updateTimer = (id) => {
     setTodoData((tasks) => {
-      const [, index, newTasks] = searchTask(id, tasks)
+      const [task, index, newTasks] = searchTask(id, tasks)
 
-      const newTask = tasks[index]
-      if (newTask.timeSeconds > 0) {
-        newTask.timeSeconds -= 1
+      if (task.timeSeconds > 0) {
+        task.timeSeconds -= 1
       } else {
-        clearInterval(newTask.timerId)
-        newTask.timeSeconds = 0
-        newTask.runTimer = false
+        clearInterval(task.timerId)
+        task.timeSeconds = 0
+        task.runTimer = false
       }
-      newTasks.splice(index, 1, newTask)
+      newTasks.splice(index, 1, task)
       return newTasks
     })
   }
